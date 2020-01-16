@@ -16,34 +16,34 @@ Run the progrom using below command in sequence
         JWT_SECRET
         MY_MAIL
 
-login user- /api/auth/login
+login user- /api/auth/login 
 body:
-        email:"<Your email>"
-        password:"<Your password>"
+        email:"Your email"
+        password:"Your password"
 
 register user- /api/auth/register
 body:
-        name:"<Your name>"
-        email:"<Your email>"
-        password:"<Your password>"
-        confirmpassword:"<Your confirmPassword>"
+        name:"Your name"
+        email:"Your email"
+        password:"Your password"
+        confirmpassword:"Your confirmPassword"
 
 forget password- /api/auth/forgetpassword
 body:
-        email:"<Your email>"
+        email:"Your email"
 
 reset password- /api/auth/resetpassword
 body:
-        email:"<Your email>"
-        newpassword:"<Your newpassword>"
-        code:"<Code from the email>"
+        email:"Your email"
+        newpassword:"Your newpassword"
+        code:"Code from the email"
 
 upload video - /api/media/upload
 file:
-        video:<your file>
+        video:your file
 header:
         x-auth-token:<your login token>
 
 get all video -/api/media
 header:
-        x-auth-token:<your login token>
+        x-auth-token:your login token
