@@ -11,7 +11,7 @@ module.exports = async function(req, res, next) {
   // Verify token
   try {
     const decoded = await jwt.verify(token, process.env.JWT_SECRET);
-    console.log({ decoded });
+    // console.log({ decoded });
     req.user = decoded;
     next();
   } catch (err) {

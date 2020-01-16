@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const session = require("express-session");
-const MongoStore = require("connect-mongo")(session);
+const cors = require("cors");
 
 require("dotenv").config();
 
@@ -19,21 +18,29 @@ db.once("open", function() {
 });
 
 //middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(
-  session({
-    store: new MongoStore({ mongooseConnection: db }),
-    secret: process.env.SESSION_SECRET,
-    cookie: { maxAge: 600000 },
-    resave: false,
-    saveUninitialized: false
+  cors({
+    exposedHeaders: ["Content-Length", "x-auth-token"]
   })
 );
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 //routes
 app.use("/api/auth", require("./api/routes/auth"));
 app.use("/api/media", require("./api/routes/media"));
+
+app.use((req, res, next) => {
+  const error = new Error("Not Found");
+  error.status = 404;
+  next(error);
+});
+
+app.use((error, req, res, next) => {
+  return res
+    .status(error.status || 500)
+    .json({ errors: [{ msg: error.message }] });
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
